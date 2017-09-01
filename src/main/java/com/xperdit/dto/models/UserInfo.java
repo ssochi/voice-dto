@@ -1,11 +1,15 @@
 package com.xperdit.dto.models;
 
+import com.xperdit.dto.annotations.Model;
 import com.xperdit.dto.utils.mInterface.mapper;
+
 
 /**
  * Copyright reserved by Beijing Muke Technology Co., Ltd. 8/21 0021.
  */
+@Model
 public interface UserInfo extends mapper {
+
     public String getToken();
 
     public void setToken(String token);

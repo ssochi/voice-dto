@@ -1,4 +1,4 @@
-package com.xperdit.dto.Enums;
+package com.xperdit.dto.enums;
 
 import java.security.InvalidParameterException;
 

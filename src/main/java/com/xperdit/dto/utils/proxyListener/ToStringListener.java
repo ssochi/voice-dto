@@ -34,8 +34,8 @@ public class ToStringListener implements proxyListener {
         for (String val : valMap.keySet()){
             Object object = valMap.get(val);
             if (obj!=null){
-                sb.append(addSpace(val,maxLen-val.length()));
-                sb.append(" : ");
+                sb.append(addSpace(val + ":", maxLen - val.length()));
+                sb.append(" \n");
                 sb.append(object);
                 sb.append("\n");
             }

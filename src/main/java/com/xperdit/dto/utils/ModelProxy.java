@@ -31,6 +31,13 @@ public class ModelProxy implements MethodInterceptor {
         this.property = property;
     }
 
+    public ModelProperty getProperty() {
+        return property;
+    }
+
+    public void setProperty(ModelProperty property) {
+        this.property = property;
+    }
 
     public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
         String fcName = method.getName();
