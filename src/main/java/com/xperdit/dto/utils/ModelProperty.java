@@ -1,6 +1,6 @@
 package com.xperdit.dto.utils;
 
-import com.xperdit.dto.utils.mInterface.proxyListener;
+import com.xperdit.dto.utils.Interfaces.ProxyListener;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -14,13 +14,13 @@ import java.util.regex.Pattern;
  */
 public class ModelProperty {
 
-    List<proxyListener> listeners;
+    List<ProxyListener> listeners;
 
-    public List<proxyListener> getListeners() {
+    public List<ProxyListener> getListeners() {
         return listeners;
     }
 
-    public void setListeners(List<proxyListener> listeners) {
+    public void setListeners(List<ProxyListener> listeners) {
         this.listeners = listeners;
     }
 

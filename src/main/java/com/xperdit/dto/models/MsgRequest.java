@@ -2,13 +2,13 @@ package com.xperdit.dto.models;
 
 import com.xperdit.dto.annotations.Model;
 import com.xperdit.dto.enums.MsgType;
-import com.xperdit.dto.utils.mInterface.mapper;
+import com.xperdit.dto.utils.Interfaces.Utils;
 
 /**
  * Copyright reserved by Beijing Muke Technology Co., Ltd. 8/21 0021.
  */
 @Model
-public interface MsgRequest extends mapper {
+public interface MsgRequest extends Utils {
 
     public MsgType getType() ;
 

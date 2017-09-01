@@ -20,11 +20,7 @@ public class DtoDefinedDeserializer extends JsonDeserializer<Object> implements 
         this.targetClass = targetClass;
     }
 
-    @Override
-    public Object deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-
-        ModelProperty property = ModelProperty.getProperty(targetClass);
-
+    public static void transJson2properties(JsonParser p, ModelProperty property) throws IOException {
         ObjectCodec oc = p.getCodec();
         JsonNode node = (JsonNode) oc.readTree(p);
 
@@ -39,14 +35,24 @@ public class DtoDefinedDeserializer extends JsonDeserializer<Object> implements 
             }
 
         }
-        ModelProxy proxy = new ModelProxy(targetClass);
-        proxy.setProperty(property);
-        return ModelFactory.create(targetClass, proxy);
     }
+
 
     @Override
     public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
         this.targetClass = ctxt.getContextualType().getRawClass();
         return new DtoDefinedDeserializer(this.targetClass);
+    }
+
+    @Override
+    public Object deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+
+        ModelProperty property = ModelProperty.getProperty(targetClass);
+
+        transJson2properties(p, property);
+
+        ModelProxy proxy = new ModelProxy(targetClass);
+        proxy.setProperty(property);
+        return ModelFactory.create(targetClass, proxy);
     }
 }

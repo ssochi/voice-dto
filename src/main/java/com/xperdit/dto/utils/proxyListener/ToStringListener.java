@@ -1,7 +1,7 @@
 package com.xperdit.dto.utils.proxyListener;
 
+import com.xperdit.dto.utils.Interfaces.ProxyListener;
 import com.xperdit.dto.utils.ModelProperty;
-import com.xperdit.dto.utils.mInterface.proxyListener;
 import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Copyright reserved by Beijing Muke Technology Co., Ltd. 8/13 0013.
  */
-public class ToStringListener implements proxyListener {
+public class ToStringListener implements ProxyListener {
     @Override
     public boolean isAccess(Method m) {
         return m.getName().equals("toString");

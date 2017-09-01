@@ -1,6 +1,6 @@
 package com.xperdit.dto.utils;
 
-import com.xperdit.dto.utils.mInterface.proxyListener;
+import com.xperdit.dto.utils.Interfaces.ProxyListener;
 import net.sf.cglib.proxy.Enhancer;
 
 import java.util.ArrayList;
@@ -10,8 +10,9 @@ import java.util.List;
  * Copyright reserved by Beijing Muke Technology Co., Ltd. 8/13 0013.
  */
 public class ModelFactory {
-    static List<proxyListener> listeners = new ArrayList<>();
-    public static void addListener(proxyListener listener){
+    static List<ProxyListener> listeners = new ArrayList<>();
+
+    public static void addListener(ProxyListener listener) {
         listeners.add(listener);
     }
 

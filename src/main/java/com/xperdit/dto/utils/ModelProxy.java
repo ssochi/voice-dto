@@ -1,6 +1,6 @@
 package com.xperdit.dto.utils;
 
-import com.xperdit.dto.utils.mInterface.proxyListener;
+import com.xperdit.dto.utils.Interfaces.ProxyListener;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -14,16 +14,16 @@ import java.util.Map;
  */
 public class ModelProxy implements MethodInterceptor {
     private ModelProperty property ;
-    private List<proxyListener> listeners;
+    private List<ProxyListener> listeners;
     ModelProxy(Class type){
         property = ModelProperty.getProperty(type);
     }
 
-    public List<proxyListener> getListeners() {
+    public List<ProxyListener> getListeners() {
         return listeners;
     }
 
-    public void setListeners(List<proxyListener> listeners) {
+    public void setListeners(List<ProxyListener> listeners) {
         this.listeners = listeners;
     }
 
@@ -42,7 +42,7 @@ public class ModelProxy implements MethodInterceptor {
     public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
         String fcName = method.getName();
 
-        for (proxyListener listener : listeners){
+        for (ProxyListener listener : listeners) {
             if (listener.isAccess(method))
                 return listener.callback(obj,method,args,proxy,property);
         }
