@@ -7,6 +7,7 @@ import java.util.UUID;
  */
 public class ModelUtils {
     public static String createId(){
-        return UUID.randomUUID().toString();
+        String res = UUID.randomUUID().toString();
+        return res.replace("-","");
     }
 }

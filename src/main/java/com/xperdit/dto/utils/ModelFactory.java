@@ -1,8 +1,7 @@
 package com.xperdit.dto.utils;
 
 import com.xperdit.dto.utils.Interfaces.ProxyListener;
-import com.xperdit.dto.utils.proxyListener.MapperListener;
-import com.xperdit.dto.utils.proxyListener.ToStringListener;
+import com.xperdit.dto.utils.proxyListener.*;
 import net.sf.cglib.proxy.Enhancer;
 
 import java.util.ArrayList;
@@ -20,6 +19,9 @@ public class ModelFactory {
     static {
         addListener(new ToStringListener());
         addListener(new MapperListener());
+        addListener(new JsonDeserializerListener());
+        addListener(new JsonSerializerListener());
+        addListener(new ClearListener());
     }
     public static <T> T create(Class<T> clazz){
         Enhancer enhancer = new Enhancer();
