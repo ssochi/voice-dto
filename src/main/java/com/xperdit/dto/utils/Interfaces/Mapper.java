@@ -1,8 +1,8 @@
-package com.xperdit.dto.utils.mInterface;
+package com.xperdit.dto.utils.Interfaces;
 
 /**
  * Copyright reserved by Beijing Muke Technology Co., Ltd. 8/13 0013.
  */
-public interface mapper {
+public interface Mapper {
     public   <T> T map(Class<T> clazz);
 }
