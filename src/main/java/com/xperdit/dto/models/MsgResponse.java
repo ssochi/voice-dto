@@ -15,7 +15,8 @@ public interface MsgResponse extends mapper {
 
     public void setType(MsgType type) ;
 
-    public String getMsgId() ;
 
-    public void setMsgId(String msgId);
+    public Object getMessage() ;
+
+    public void setMessage(Object message) ;
 }

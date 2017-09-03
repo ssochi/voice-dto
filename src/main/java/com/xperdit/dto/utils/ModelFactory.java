@@ -1,6 +1,8 @@
 package com.xperdit.dto.utils;
 
 import com.xperdit.dto.utils.mInterface.proxyListener;
+import com.xperdit.dto.utils.proxyListener.MapperListener;
+import com.xperdit.dto.utils.proxyListener.ToStringListener;
 import net.sf.cglib.proxy.Enhancer;
 
 import java.util.ArrayList;
@@ -14,7 +16,10 @@ public class ModelFactory {
     public static void addListener(proxyListener listener){
         listeners.add(listener);
     }
-
+    static {
+        addListener(new ToStringListener());
+        addListener(new MapperListener());
+    }
     public static <T> T create(Class<T> clazz){
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(clazz);

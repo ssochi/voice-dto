@@ -12,11 +12,12 @@ public interface MsgRequest extends mapper {
 
     public void setType(MsgType type) ;
 
-    public String getMsgId() ;
-
-    public void setMsgId(String msgId) ;
 
     public UserInfo getInfo() ;
 
     public void setInfo(UserInfo info) ;
+
+    public Object getMessage() ;
+
+    public void setMessage(Object message) ;
 }
