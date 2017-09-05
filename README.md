@@ -1,15 +1,16 @@
-## ModelFactory
+## Why Models
 
-when i saw my workmates using interface as pojo at first time , i scream it's was a good idea that
-a simple java bean can extends beans as more as it want extends.
-so i create this modelfactory ,using cglib and it is very simple to use.
+Models supports base usage of dto ,and it supports more Scalable function 
+such like toJson ,toString ,map .All of those function can make your own Models
+more useful .
 
 ### First
 
 you should create a simple interface (or called it model)
 
 ```code
-    public interface task1 {
+    @Model
+    public interface task1{
         public void setName(String name);
         public String getName();
     }
@@ -27,24 +28,15 @@ you should create a simple interface (or called it model)
 #### want have a toString function ?
 
 ```code
-    ModelFactory.addListener(new ToStringListener());
-    task1 task1 = ModelFactory.create(task1.class);
-    task1.setName("task1");
-    System.out.println(task1);
-```
-#### want autoMapper ?
-
-make sure your model extends mapper then add MapperListener
-
-```code
-    ModelFactory.addListener(new MapperListener());
-    ModelFactory.addListener(new ToStringListener());
-    task1 task1 = ModelFactory.create(task1.class);
-    task1.setName("task1");
-    task2 task2 = task1.map(task2.class);
-    System.out.println(task2);
+    @Model
+        public interface task1{
+            public void setName(String name);
+            public String getName();
+            @DtoListener(DtoListener = ToStringListener.class)
+            public String toString();
+        }
 ```
 
 #### finally 
 
-you can expand your own listener make your model more useful
+you can expand your own listener make your models more useful .
