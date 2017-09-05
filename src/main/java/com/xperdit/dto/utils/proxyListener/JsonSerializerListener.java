@@ -11,10 +11,10 @@ public class JsonSerializerListener implements ProxyListener {
 
     static ObjectMapper mapper = new ObjectMapper();
 
-    @Override
-    public boolean isAccess(Method m) {
-        return m.getName().equals("toJson");
-    }
+
+
+
+
 
     @Override
     public Object callback(Object obj, Method method, Object[] args, MethodProxy proxy, ModelProperty property) throws Exception {

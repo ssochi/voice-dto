@@ -11,10 +11,10 @@ import java.util.Map;
  * Copyright reserved by Beijing Muke Technology Co., Ltd. 8/13 0013.
  */
 public class ToStringListener implements ProxyListener {
-    @Override
-    public boolean isAccess(Method m) {
-        return m.getName().equals("toString");
-    }
+
+
+
+
 
     @Override
     public Object callback(Object obj, Method method, Object[] args, MethodProxy proxy, ModelProperty property) {

@@ -1,8 +1,7 @@
 package com.xperdit.dto.models;
 
 import com.xperdit.dto.annotations.Model;
-import com.xperdit.dto.enums.MsgType;
-import com.xperdit.dto.utils.Interfaces.Mapper;
+import com.xperdit.dto.Enums.MsgType;
 import com.xperdit.dto.utils.Interfaces.Utils;
 
 

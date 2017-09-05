@@ -14,10 +14,10 @@ import java.util.Map;
  */
 public class MapperListener implements ProxyListener {
 
-    @Override
-    public boolean isAccess(Method m) {
-        return m.getName().equals("map");
-    }
+
+
+
+
 
     @Override
     public Object callback(Object obj, Method method, Object[] args, MethodProxy proxy, ModelProperty property) {

@@ -6,6 +6,7 @@ import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,18 +15,11 @@ import java.util.Map;
  */
 public class ModelProxy implements MethodInterceptor {
     private ModelProperty property ;
-    private List<ProxyListener> listeners;
+
     ModelProxy(Class type){
         property = ModelProperty.getProperty(type);
     }
 
-    public List<ProxyListener> getListeners() {
-        return listeners;
-    }
-
-    public void setListeners(List<ProxyListener> listeners) {
-        this.listeners = listeners;
-    }
 
     public ModelProxy(ModelProperty property){
         this.property = property;
@@ -42,9 +36,9 @@ public class ModelProxy implements MethodInterceptor {
     public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
         String fcName = method.getName();
 
-        for (ProxyListener listener : listeners) {
-            if (listener.isAccess(method))
-                return listener.callback(obj,method,args,proxy,property);
+        Map<String,ProxyListener> proxyListenerMap = property.getListenersMap();
+        if (proxyListenerMap.containsKey(fcName)){
+            return proxyListenerMap.get(fcName).callback(obj,method,args,proxy,property);
         }
 
         MethodType mt = MethodType.getMethodType(method);
@@ -53,7 +47,7 @@ public class ModelProxy implements MethodInterceptor {
         if (mt.getType()== MethodType.type.SET){
             map.put(mt.getName(),args[0]);
             return null;
-        }else if (mt.getType()== MethodType.type.GET){
+        }else if (mt.getType()== MethodType.type.GET ){
             return map.get(mt.getName());
         }else{
             throw new NoSuchMethodError("method name must start with get or set or is");

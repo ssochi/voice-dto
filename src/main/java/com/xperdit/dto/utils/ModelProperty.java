@@ -1,8 +1,14 @@
 package com.xperdit.dto.utils;
 
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xperdit.dto.annotations.DtoListener;
 import com.xperdit.dto.utils.Interfaces.ProxyListener;
+import com.xperdit.dto.utils.proxyListener.DefinedListener;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +20,15 @@ import java.util.regex.Pattern;
  */
 public class ModelProperty {
 
-    List<ProxyListener> listeners;
+    static private ObjectMapper mapper = new ObjectMapper();
 
-    public List<ProxyListener> getListeners() {
-        return listeners;
-    }
+    Map<String,ProxyListener> ListenersMap;
 
-    public void setListeners(List<ProxyListener> listeners) {
-        this.listeners = listeners;
-    }
+    private Class type;
 
     private Map<String,Object> valMap;
 
-    private Map<String, Class> typeMap;
+    private Map<String, JavaType> typeMap;
 
     public Map<String, Object> getValMap() {
         return valMap;
@@ -44,40 +46,70 @@ public class ModelProperty {
         this.type = type;
     }
 
-    private Class type;
+    public Map<String, ProxyListener> getListenersMap() {
+        return ListenersMap;
+    }
+
+    public void setListenersMap(Map<String, ProxyListener> listenersMap) {
+        ListenersMap = listenersMap;
+    }
 
     public static ModelProperty getProperty(Class clazz){
         ModelProperty property = new ModelProperty();
         property.type = clazz;
         Map<String,Object> valMap = new HashMap<String,Object>();
-        Map<String, Class> typeMap = new HashMap<>();
-
+        Map<String, JavaType> typeMap = new HashMap<>();
+        Map<String,ProxyListener> listenersMap = new HashMap<>();
 
         Method[] methods = clazz.getMethods();
 
         Pattern regex = Pattern.compile("^(?<method>([g]et)|(is))(?<property>[A-Z0-9_][A-Za-z0-9_]*)$");
 
         for (Method m : methods){
+            addDtoListener(m,listenersMap);
             Matcher matcher = regex.matcher(m.getName());
+
             if (matcher.matches()){
                 String item = matcher.group("property");
-                typeMap.put(item, m.getReturnType());
+                typeMap.put(item, getJavaTypeByMethod(m));
                 valMap.put(item,null);
             }
         }
 
         property.valMap = valMap;
         property.typeMap = typeMap;
+        property.ListenersMap = listenersMap;
 
         return property;
     }
 
-    public Map<String, Class> getTypeMap() {
+    private static void addDtoListener(Method m, Map<String, ProxyListener> listenersMap) {
+        DtoListener listener = m.getAnnotation(DtoListener.class);
+        if (listener!=null){
+            try {
+                ProxyListener proxyListener = listener.DtoListener().newInstance();
+                listenersMap.put(m.getName(),proxyListener);
+            } catch (InstantiationException | IllegalAccessException e) {
+                //if catch exception , put defined listener on the map , but it just return null = =
+                listenersMap.put(m.getName(),new DefinedListener());
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+    public static JavaType getJavaTypeByMethod(Method method){
+        Class mainClass = method.getReturnType();
+        Type type = method.getGenericReturnType();
+        return mapper.getTypeFactory().constructType(type);
+    }
+
+    public Map<String, JavaType> getTypeMap() {
         return typeMap;
     }
 
-    public void setTypeMap(Map<String, Class> typeMap) {
+    public void setTypeMap(Map<String, JavaType> typeMap) {
         this.typeMap = typeMap;
     }
-
 }

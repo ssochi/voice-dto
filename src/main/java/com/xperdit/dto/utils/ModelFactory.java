@@ -1,9 +1,12 @@
 package com.xperdit.dto.utils;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
 import com.xperdit.dto.utils.Interfaces.ProxyListener;
 import com.xperdit.dto.utils.proxyListener.*;
 import net.sf.cglib.proxy.Enhancer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,23 +14,24 @@ import java.util.List;
  * Copyright reserved by Beijing Muke Technology Co., Ltd. 8/13 0013.
  */
 public class ModelFactory {
-    static List<ProxyListener> listeners = new ArrayList<>();
 
-    public static void addListener(ProxyListener listener) {
-        listeners.add(listener);
-    }
-    static {
-        addListener(new ToStringListener());
-        addListener(new MapperListener());
-        addListener(new JsonDeserializerListener());
-        addListener(new JsonSerializerListener());
-        addListener(new ClearListener());
-    }
     public static <T> T create(Class<T> clazz){
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(clazz);
         ModelProxy proxy = new ModelProxy(clazz);
-        proxy.setListeners(listeners);
+        enhancer.setCallback(proxy);
+        return (T) enhancer.create();
+    }
+    public static <T> T create(Class<T> clazz,String json){
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(clazz);
+        ModelProxy proxy = new ModelProxy(clazz);
+        ModelProperty property = proxy.getProperty();
+        try {
+            DtoDefinedDeserializer.transJson2properties(json,property);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         enhancer.setCallback(proxy);
         return (T) enhancer.create();
     }
@@ -35,7 +39,6 @@ public class ModelFactory {
     public static <T> T create(Class<T> clazz,ModelProxy proxy){
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(clazz);
-        proxy.setListeners(listeners);
         enhancer.setCallback(proxy);
         return (T) enhancer.create();
     }

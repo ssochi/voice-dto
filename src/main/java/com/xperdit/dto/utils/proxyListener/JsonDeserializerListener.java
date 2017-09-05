@@ -14,17 +14,17 @@ public class JsonDeserializerListener implements ProxyListener {
 
     static ObjectMapper mapper = new ObjectMapper();
 
-    @Override
-    public boolean isAccess(Method m) {
-        return m.getName().equals("fromJson");
-    }
+
+
+
+
 
     @Override
     public Object callback(Object obj, Method method, Object[] args, MethodProxy proxy, ModelProperty property) throws IOException {
         if (args.length != 1)
             return null;
-        JsonParser p = mapper.getJsonFactory().createParser(args[0].toString());
-        DtoDefinedDeserializer.transJson2properties(p, property);
+
+        DtoDefinedDeserializer.transJson2properties(args[0].toString(), property);
 
         return null;
 
