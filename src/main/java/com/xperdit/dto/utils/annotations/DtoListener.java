@@ -1,4 +1,4 @@
-package com.xperdit.dto.annotations;
+package com.xperdit.dto.utils.annotations;
 
 
 import java.lang.annotation.Retention;

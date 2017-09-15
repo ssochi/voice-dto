@@ -36,6 +36,10 @@ you should create a simple interface (or called it model)
             public String toString();
         }
 ```
+model now supports four functions for defined :
+clear,toJson,jsonFrom,map.and all those function are proxyListener ,
+and there is a interface called Utils ,you can make your models extends Utils,and your
+models can have all the function above.
 
 #### finally 
 

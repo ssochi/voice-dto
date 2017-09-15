@@ -2,15 +2,13 @@ package com.xperdit.dto.utils;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xperdit.dto.annotations.DtoListener;
+import com.xperdit.dto.utils.annotations.DtoListener;
 import com.xperdit.dto.utils.Interfaces.ProxyListener;
 import com.xperdit.dto.utils.proxyListener.DefinedListener;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

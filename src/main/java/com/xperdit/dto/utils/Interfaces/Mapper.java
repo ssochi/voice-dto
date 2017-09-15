@@ -1,6 +1,6 @@
 package com.xperdit.dto.utils.Interfaces;
 
-import com.xperdit.dto.annotations.*;
+import com.xperdit.dto.utils.annotations.*;
 import com.xperdit.dto.utils.proxyListener.MapperListener;
 
 /**

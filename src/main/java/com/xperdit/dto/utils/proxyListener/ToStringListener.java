@@ -11,11 +11,6 @@ import java.util.Map;
  * Copyright reserved by Beijing Muke Technology Co., Ltd. 8/13 0013.
  */
 public class ToStringListener implements ProxyListener {
-
-
-
-
-
     @Override
     public Object callback(Object obj, Method method, Object[] args, MethodProxy proxy, ModelProperty property) {
         StringBuilder sb = new StringBuilder();

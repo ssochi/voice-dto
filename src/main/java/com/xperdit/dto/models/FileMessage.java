@@ -1,6 +1,6 @@
 package com.xperdit.dto.models;
 
-import com.xperdit.dto.annotations.Model;
+import com.xperdit.dto.utils.annotations.Model;
 
 /**
  * Copyright reserved by Beijing Xperdit Technology Co., Ltd. 8/27 0027.
