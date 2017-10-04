@@ -1,4 +1,4 @@
-package com.xperdit.dto.utils;
+package com.xperdit.dto.core.utils;
 
 import java.util.UUID;
 

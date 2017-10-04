@@ -1,8 +1,8 @@
 package com.xperdit.dto.models;
 
-import com.xperdit.dto.utils.annotations.Model;
+import com.xperdit.dto.core.annotations.Model;
 import com.xperdit.dto.Enums.MsgType;
-import com.xperdit.dto.utils.Interfaces.Utils;
+import com.xperdit.dto.core.Interfaces.Utils;
 
 
 import java.util.Date;

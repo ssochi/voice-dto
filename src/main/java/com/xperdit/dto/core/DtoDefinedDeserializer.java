@@ -1,4 +1,4 @@
-package com.xperdit.dto.utils;
+package com.xperdit.dto.core;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
+import com.xperdit.dto.core.utils.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
@@ -62,5 +63,8 @@ public class DtoDefinedDeserializer extends JsonDeserializer<Object> implements 
         ModelProxy proxy = new ModelProxy(targetClass);
         proxy.setProperty(property);
         return ModelFactory.create(targetClass, proxy);
+    }
+    public static String transModel2Json(Object model) throws JsonProcessingException {
+        return mapper.writeValueAsString(model);
     }
 }

@@ -1,4 +1,4 @@
-package com.xperdit.dto.utils.annotations;
+package com.xperdit.dto.core.annotations;
 
 
 import java.lang.annotation.Retention;
@@ -9,5 +9,6 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DtoListener {
-    public Class<? extends com.xperdit.dto.utils.Interfaces.ProxyListener> DtoListener();
+    public Class<? extends com.xperdit.dto.core.Interfaces.ProxyListener> DtoListener();
+    public boolean  overwriteObject() default false;
 }

@@ -1,10 +1,10 @@
-package com.xperdit.dto.utils;
+package com.xperdit.dto.core;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xperdit.dto.utils.annotations.DtoListener;
-import com.xperdit.dto.utils.Interfaces.ProxyListener;
-import com.xperdit.dto.utils.proxyListener.DefinedListener;
+import com.xperdit.dto.core.annotations.DtoListener;
+import com.xperdit.dto.core.Interfaces.ProxyListener;
+import com.xperdit.dto.core.proxyListener.DefinedListener;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -20,7 +20,7 @@ public class ModelProperty {
 
     static private ObjectMapper mapper = new ObjectMapper();
 
-    Map<String,ProxyListener> ListenersMap;
+    Map<Method,ProxyListener> ListenersMap;
 
     private Class type;
 
@@ -44,11 +44,11 @@ public class ModelProperty {
         this.type = type;
     }
 
-    public Map<String, ProxyListener> getListenersMap() {
+    public Map<Method, ProxyListener> getListenersMap() {
         return ListenersMap;
     }
 
-    public void setListenersMap(Map<String, ProxyListener> listenersMap) {
+    public void setListenersMap(Map<Method, ProxyListener> listenersMap) {
         ListenersMap = listenersMap;
     }
 
@@ -57,7 +57,7 @@ public class ModelProperty {
         property.type = clazz;
         Map<String,Object> valMap = new HashMap<String,Object>();
         Map<String, JavaType> typeMap = new HashMap<>();
-        Map<String,ProxyListener> listenersMap = new HashMap<>();
+        Map<Method,ProxyListener> listenersMap = new HashMap<>();
 
         Method[] methods = clazz.getMethods();
 
@@ -81,19 +81,22 @@ public class ModelProperty {
         return property;
     }
 
-    private static void addDtoListener(Method m, Map<String, ProxyListener> listenersMap) {
+    private static void addDtoListener(Method m, Map<Method, ProxyListener> listenersMap) {
         DtoListener listener = m.getAnnotation(DtoListener.class);
+
         if (listener!=null){
             try {
+                if (listener.overwriteObject()){
+                    m = Object.class.getMethod(m.getName());
+                }
                 ProxyListener proxyListener = listener.DtoListener().newInstance();
-                listenersMap.put(m.getName(),proxyListener);
-            } catch (InstantiationException | IllegalAccessException e) {
+                listenersMap.put(m,proxyListener);
+            } catch (InstantiationException | IllegalAccessException |NoSuchMethodException e) {
                 //if catch exception , put defined listener on the map , but it just return null = =
-                listenersMap.put(m.getName(),new DefinedListener());
+                listenersMap.put(m,new DefinedListener());
                 e.printStackTrace();
             }
         }
-
     }
 
 

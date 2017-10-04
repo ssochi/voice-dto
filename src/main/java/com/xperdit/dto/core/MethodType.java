@@ -1,13 +1,13 @@
-package com.xperdit.dto.utils;
+package com.xperdit.dto.core;
 
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.xperdit.dto.utils.MethodType.type.GET;
-import static com.xperdit.dto.utils.MethodType.type.NULL;
-import static com.xperdit.dto.utils.MethodType.type.SET;
+import static com.xperdit.dto.core.MethodType.type.GET;
+import static com.xperdit.dto.core.MethodType.type.NULL;
+import static com.xperdit.dto.core.MethodType.type.SET;
 
 class MethodType {
         

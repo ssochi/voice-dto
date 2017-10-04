@@ -1,4 +1,4 @@
-package com.xperdit.dto.utils.models;
+package com.xperdit.dto.core.models;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;

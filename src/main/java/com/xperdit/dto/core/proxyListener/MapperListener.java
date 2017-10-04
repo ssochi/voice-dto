@@ -1,9 +1,9 @@
-package com.xperdit.dto.utils.proxyListener;
+package com.xperdit.dto.core.proxyListener;
 
-import com.xperdit.dto.utils.Interfaces.ProxyListener;
-import com.xperdit.dto.utils.ModelFactory;
-import com.xperdit.dto.utils.ModelProperty;
-import com.xperdit.dto.utils.ModelProxy;
+import com.xperdit.dto.core.Interfaces.ProxyListener;
+import com.xperdit.dto.core.ModelFactory;
+import com.xperdit.dto.core.ModelProperty;
+import com.xperdit.dto.core.ModelProxy;
 import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;

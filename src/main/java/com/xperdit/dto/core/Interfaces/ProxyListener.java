@@ -1,6 +1,6 @@
-package com.xperdit.dto.utils.Interfaces;
+package com.xperdit.dto.core.Interfaces;
 
-import com.xperdit.dto.utils.ModelProperty;
+import com.xperdit.dto.core.ModelProperty;
 import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;

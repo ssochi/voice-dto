@@ -1,13 +1,13 @@
-package com.xperdit.dto.utils;
+package com.xperdit.dto.core;
 
-import com.xperdit.dto.utils.Interfaces.ProxyListener;
+import com.xperdit.dto.core.Interfaces.ProxyFilter;
+import com.xperdit.dto.core.Interfaces.ProxyListener;
+import com.xperdit.dto.core.annotations.DtoFilter;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,25 +34,36 @@ public class ModelProxy implements MethodInterceptor {
     }
 
     public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
-        String fcName = method.getName();
 
-        Map<String,ProxyListener> proxyListenerMap = property.getListenersMap();
-        if (proxyListenerMap.containsKey(fcName)){
-            return proxyListenerMap.get(fcName).callback(obj,method,args,proxy,property);
+        DtoFilter filter = method.getAnnotation(DtoFilter.class);
+        ProxyFilter proxyFilter = null;
+        Object res = null;
+        if (filter!=null){
+            proxyFilter = filter.ProxyFilter().newInstance();
+            proxyFilter.before(obj,method,args,proxy,property);
         }
 
-        MethodType mt = MethodType.getMethodType(method);
-        Map<String,Object> map = property.getValMap();
-
-        if (mt.getType()== MethodType.type.SET){
-            map.put(mt.getName(),args[0]);
-            return null;
-        }else if (mt.getType()== MethodType.type.GET ){
-            return map.get(mt.getName());
+        Map<Method,ProxyListener> proxyListenerMap = property.getListenersMap();
+        if (proxyListenerMap.containsKey(method)){
+            res = proxyListenerMap.get(method).callback(obj,method,args,proxy,property);
         }else{
-            throw new NoSuchMethodError("method name must start with get or set or is");
+            MethodType mt = MethodType.getMethodType(method);
+            Map<String,Object> map = property.getValMap();
+
+            if (mt.getType()== MethodType.type.SET){
+                map.put(mt.getName(),args[0]);
+            }else if (mt.getType()== MethodType.type.GET ){
+                res =  map.get(mt.getName());
+            }else{
+                throw new NoSuchMethodError("method name must start with get or set or is");
+            }
         }
 
+        if (proxyFilter!=null){
+            res = proxyFilter.after(res,obj,method,args,proxy,property);
+        }
+
+        return res;
 
     }
 
