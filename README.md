@@ -1,7 +1,7 @@
 ## Why Models
 
 Models supports base usage of dto ,and it supports more Scalable function 
-such like toJson ,toString ,map .All of those function can make your own Models
+such like toJson ,toString ,map ,and most important ,Models is Multiple Inheritance.All of those function can make your own Models
 more useful .
 
 ### First
@@ -36,11 +36,24 @@ you should create a simple interface (or called it model)
             public String toString();
         }
 ```
-model now supports four functions for defined :
+model now have four default functions :
 clear,toJson,jsonFrom,map.and all those function are proxyListener ,
 and there is a interface called Utils ,you can make your models extends Utils,and your
 models can have all the function above.
 
-#### finally 
+#### annotations
+```code
+    @Model
+    describe the model ,if you need using default json operations ,
+    you should add this annotation in your model-interface .
+    
+    @DtoListener
+    if you want make your models support some function ,you should
+    add this annotation to listen your function .
+    
+    @DtoFilter
+    this is a method filter ,you can add it to every method you 
+    wanna filte .
+    
+```
 
-you can expand your own listener make your models more useful .
